@@ -1,0 +1,385 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <xsd:element name="DatabaseLogicalModel">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="Description" type="xsd:string"/>
+                <xsd:element name="Counter" type="Counter"/>
+                <xsd:element name="Properties" type="Properties"/>
+                <xsd:element name="Entities" type="Entities"/>
+                <xsd:element name="Associations" type="Associations"/>
+                <xsd:element name="Inheritances" type="Inheritances"/>
+                <xsd:element name="EntityRelationships" type="EntityRelationships"/>
+                <xsd:element name="AssociationRelationships" type="AssociationRelationships"/>
+                <xsd:element name="Notes" type="Notes"/>
+                <xsd:element name="Areas" type="Areas"/>
+                <xsd:element name="EntityDisplays" type="EntityDisplays"/>
+                <xsd:element name="AssociationDisplays" type="AssociationDisplays"/>
+                <xsd:element name="InheritanceDisplays" type="InheritanceDisplays"/>
+                <xsd:element name="EntityRelationshipsDisplays" type="EntityRelationshipDisplays"/>
+                <xsd:element name="AssociationRelationshipsDisplays" type="AssociationRelationshipDisplays"/>
+                <xsd:element name="NoteDisplays" type="NoteDisplays"/>
+                <xsd:element name="AreaDisplays" type="AreaDisplays"/>
+            </xsd:sequence>
+            <xsd:attribute name="VersionId" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+
+
+    <xsd:complexType name="Counter">
+        <xsd:attribute name="Value" type="xsd:long" default="0"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="Property">
+        <xsd:sequence>
+            <xsd:element name="Name" type="xsd:string"/>
+            <xsd:element name="Value" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="Properties">
+        <xsd:sequence>
+            <xsd:element name="Property" type="Property" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Entities">
+        <xsd:sequence>
+            <xsd:element name="Entity" type="Entity" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="Entity">
+        <xsd:sequence>
+            <xsd:element name="Name" type="xsd:string"/>
+            <xsd:element name="Description" type="xsd:string"/>
+            <xsd:element name="PrimaryIdentifier" type="PrimaryIdentifier" minOccurs ="0" maxOccurs="1"/>
+            <xsd:element name="EntityIdentifiers" type="EntityIdentifiers" />
+            <xsd:element name="Attributes" type="EntityAttributes" />
+            <xsd:element name="InheritanceDetails" type="EntityInheritanceDetails" />
+        </xsd:sequence>
+        <xsd:attribute name="Id" type="xsd:ID"/>
+    </xsd:complexType>
+    <xsd:complexType name="PrimaryIdentifier">
+        <xsd:sequence>
+            <xsd:element name="Name" type="xsd:string"/>
+            <xsd:element name="Attributes" type="IdentifierAttributes"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="IdentifierAttributes">
+        <xsd:sequence>
+            <xsd:element name="Attribute" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="EntityIdentifiers">
+        <xsd:sequence>
+            <xsd:element name="EntityIdentifier" type="EntityIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="EntityIdentifier">
+        <xsd:sequence>
+            <xsd:element name="Id" type="xsd:string"/>
+            <xsd:element name="Name" type="xsd:string"/>
+            <xsd:element name="Comment" type="xsd:string"/>
+            <xsd:element name="Attributes" type="IdentifierAttributes"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="EntityAttributes">
+        <xsd:sequence>
+            <xsd:element name="Attribute" type="EntityAttribute" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="EntityAttribute">
+        <xsd:sequence>
+            <xsd:element name="Name" type="xsd:string"/>
+            <xsd:element name="Datatype" type="xsd:string"/>
+            <xsd:element name="Mandatory" type="xsd:boolean"/>
+            <xsd:element name="Comment" type="xsd:string"/>
+        </xsd:sequence>
+        <xsd:attribute name="Id" type="xsd:ID"/>
+    </xsd:complexType>
+    <xsd:complexType name="EntityInheritanceDetails">
+        <xsd:sequence>
+            <xsd:element name="ExclusiveChildren" type="xsd:boolean" />
+            <xsd:element name="Complete" type="xsd:boolean" />
+            <xsd:element name="GenerationStrategy" type="GenerationStrategy" />
+            <xsd:element name="DiscriminatorName" type="xsd:string" minOccurs="0" />
+            <xsd:element name="DiscriminatorType" type="xsd:string" minOccurs="0" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:simpleType name="GenerationStrategy">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="OneTablePerWholeHierarchy"/>
+            <xsd:enumeration value="TablePerEntity"/>
+            <xsd:enumeration value="TablesPerEntityAllAttributes"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="Associations">
+        <xsd:sequence>
+            <xsd:element name="Association" type="Association" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="Association">
+        <xsd:sequence>
+            <xsd:element name="Name" type="xsd:string"/>
+            <xsd:element name="Description" type="xsd:string"/>
+            <xsd:element name="Attributes" type="AssociationAttributes" />
+        </xsd:sequence>
+        <xsd:attribute name="Id" type="xsd:ID"/>
+    </xsd:complexType>
+    <xsd:complexType name="AssociationAttributes">
+        <xsd:sequence>
+            <xsd:element name="Attribute" type="AssociationAttribute" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="AssociationAttribute">
+        <xsd:sequence>
+            <xsd:element name="Name" type="xsd:string"/>
+            <xsd:element name="Datatype" type="xsd:string"/>
+            <xsd:element name="Mandatory" type="xsd:boolean"/>
+            <xsd:element name="Comment" type="xsd:string"/>
+        </xsd:sequence>
+        <xsd:attribute name="Id" type="xsd:ID"/>
+    </xsd:complexType>
+
+
+    <xsd:complexType name="Notes">
+        <xsd:sequence>
+            <xsd:element name="Note" type="Note" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="Note">
+        <xsd:sequence>
+            <xsd:element name="Name" type="xsd:string"/>
+            <xsd:element name="Content" type="xsd:string"/>
+        </xsd:sequence>
+        <xsd:attribute name="Id" type="xsd:ID"/>
+    </xsd:complexType>
+
+
+    <xsd:complexType name="Areas">
+        <xsd:sequence>
+            <xsd:element name="Area" type="Area" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="Area">
+        <xsd:sequence>
+            <xsd:element name="Name" type="xsd:string"/>
+        </xsd:sequence>
+        <xsd:attribute name="Id" type="xsd:ID"/>
+    </xsd:complexType>
+
+
+    <xsd:complexType name="Inheritances">
+        <xsd:sequence>
+            <xsd:element name="Inheritance" type="Inheritance" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="Inheritance">
+        <xsd:sequence>
+            <xsd:element name="Name" type="xsd:string"/>
+            <xsd:element name="Role" type="xsd:string" default=""/>
+            <xsd:element name="Comment" type="xsd:string" default=""/>
+            <xsd:element name="ParentEntity" type="xsd:IDREF"/>
+            <xsd:element name="ChildEntity" type="xsd:IDREF"/>
+        </xsd:sequence>
+        <xsd:attribute name="Id" type="xsd:ID"/>
+    </xsd:complexType>
+
+
+    <xsd:complexType name="EntityRelationships">
+        <xsd:sequence>
+            <xsd:element name="EntityRelationship" type="EntityRelationship" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="EntityRelationship">
+        <xsd:sequence>
+            <xsd:element name="Name" type="xsd:string"/>
+            <xsd:element name="Comment" type="xsd:string"/>
+            <xsd:element name="Cardinality" type="xsd:string"/>
+            <xsd:element name="Entity_1" type="xsd:IDREF"/>
+            <xsd:element name="Entity_2" type="xsd:IDREF"/>
+            <xsd:element name="Entity_1_Role" type="xsd:string"/>
+            <xsd:element name="Entity_2_Role" type="xsd:string"/>
+            <xsd:element name="Entity_1_Dependant" type="xsd:boolean"/>
+            <xsd:element name="Entity_2_Dependant" type="xsd:boolean"/>
+            <xsd:element name="Entity_1_Mandatory" type="xsd:boolean"/>
+            <xsd:element name="Entity_2_Mandatory" type="xsd:boolean"/>
+        </xsd:sequence>
+        <xsd:attribute name="Id" type="xsd:ID"/>
+    </xsd:complexType>
+
+
+    <xsd:complexType name="AssociationRelationships">
+        <xsd:sequence>
+            <xsd:element name="AssociationRelationship" type="AssociationRelationship" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="AssociationRelationship">
+        <xsd:sequence>
+            <xsd:element name="Name" type="xsd:string"/>
+            <xsd:element name="Comment" type="xsd:string"/>
+            <xsd:element name="RelationshipType" type="xsd:string"/>
+            <xsd:element name="Entity" type="xsd:IDREF"/>
+            <xsd:element name="Association" type="xsd:IDREF"/>
+            <xsd:element name="EntityRole" type="xsd:string"/>
+            <xsd:element name="AssociationRole" type="xsd:string"/>
+            <xsd:element name="AssociationDependant" type="xsd:boolean"/>
+        </xsd:sequence>
+        <xsd:attribute name="Id" type="xsd:ID"/>
+    </xsd:complexType>
+
+
+    <xsd:complexType name="EntityDisplays">
+        <xsd:sequence>
+            <xsd:element name="EntityDisplay" type="EntityDisplayInfo" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="EntityDisplayInfo">
+        <xsd:sequence>
+            <xsd:element name="X" type="xsd:double"/>
+            <xsd:element name="Y" type="xsd:double"/>
+            <xsd:element name="Width" type="xsd:double"/>
+            <xsd:element name="Height" type="xsd:double"/>
+            <xsd:element name="LineColor" type="xsd:string"/>
+            <xsd:element name="FillColor" type="xsd:string"/>
+            <xsd:element name="Entity" type="xsd:IDREF" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="FixedSize" type="xsd:boolean"/>
+        </xsd:sequence>
+        <xsd:attribute name="Id" type="xsd:ID"/>
+    </xsd:complexType>
+
+
+    <xsd:complexType name="AssociationDisplays">
+        <xsd:sequence>
+            <xsd:element name="AssociationDisplay" type="AssociationDisplayInfo" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="AssociationDisplayInfo">
+        <xsd:sequence>
+            <xsd:element name="X" type="xsd:double"/>
+            <xsd:element name="Y" type="xsd:double"/>
+            <xsd:element name="Width" type="xsd:double"/>
+            <xsd:element name="Height" type="xsd:double"/>
+            <xsd:element name="LineColor" type="xsd:string"/>
+            <xsd:element name="FillColor" type="xsd:string"/>
+            <xsd:element name="Association" type="xsd:IDREF" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="FixedSize" type="xsd:boolean"/>
+        </xsd:sequence>
+        <xsd:attribute name="Id" type="xsd:ID"/>
+    </xsd:complexType>
+
+
+    <xsd:complexType name="InheritanceDisplays">
+        <xsd:sequence>
+            <xsd:element name="InheritanceDisplay" type="InheritanceDisplayInfo" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="InheritanceDisplayInfo">
+        <xsd:sequence>
+            <xsd:element name="Color" type="xsd:string"/>
+            <xsd:element name="Type" type="ControlPointsType"/>
+            <xsd:element name="ControlPoints" type="ReferenceControlPoints" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="ParentEntityDisplay" type="xsd:IDREF"/>
+            <xsd:element name="ChildEntityDisplay" type="xsd:IDREF"/>
+            <xsd:element name="Reference" type="xsd:IDREF"/>
+        </xsd:sequence>
+        <xsd:attribute name="Id" type="xsd:ID"/>
+    </xsd:complexType>
+    <xsd:complexType name="EntityRelationshipDisplays">
+        <xsd:sequence>
+            <xsd:element name="EntityRelationshipDisplay" type="EntityRelationshipDisplayInfo" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="EntityRelationshipDisplayInfo">
+        <xsd:sequence>
+            <xsd:element name="Color" type="xsd:string"/>
+            <xsd:element name="Type" type="ControlPointsType"/>
+            <xsd:element name="ControlPoints" type="ReferenceControlPoints" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="Entity_1_Display" type="xsd:IDREF"/>
+            <xsd:element name="Entity_2_Display" type="xsd:IDREF"/>
+            <xsd:element name="Reference" type="xsd:IDREF"/>
+        </xsd:sequence>
+        <xsd:attribute name="Id" type="xsd:ID"/>
+    </xsd:complexType>
+    <xsd:complexType name="AssociationRelationshipDisplays">
+        <xsd:sequence>
+            <xsd:element name="AssociationRelationshipDisplay" type="AssociationRelationshipDisplayInfo" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="AssociationRelationshipDisplayInfo">
+        <xsd:sequence>
+            <xsd:element name="Color" type="xsd:string"/>
+            <xsd:element name="Type" type="ControlPointsType"/>
+            <xsd:element name="ControlPoints" type="ReferenceControlPoints" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="EntityDisplay" type="xsd:IDREF"/>
+            <xsd:element name="AssociationDisplay" type="xsd:IDREF"/>
+            <xsd:element name="Reference" type="xsd:IDREF"/>
+        </xsd:sequence>
+        <xsd:attribute name="Id" type="xsd:ID"/>
+    </xsd:complexType>
+    <xsd:simpleType name="ControlPointsType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Vertical_2CP"/>
+            <xsd:enumeration value="Horizontal_2CP"/>
+            <xsd:enumeration value="Vertical_4CP"/>
+            <xsd:enumeration value="Horizontal_4CP"/>
+            <xsd:enumeration value="Cross_3CP"/>
+            <xsd:enumeration value="Self_4CP"/>
+            <xsd:enumeration value="Self_5CP"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:complexType name="ReferenceControlPoints">
+        <xsd:sequence>
+            <xsd:element name="ControlPoint" type="Point" minOccurs="2" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="Point">
+        <xsd:sequence>
+            <xsd:element name="X" type="xsd:double"/>
+            <xsd:element name="Y" type="xsd:double"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+
+    <xsd:complexType name="NoteDisplays">
+        <xsd:sequence>
+            <xsd:element name="NoteDisplay" type="NoteDisplayInfo" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="NoteDisplayInfo">
+        <xsd:sequence>
+            <xsd:element name="X" type="xsd:double"/>
+            <xsd:element name="Y" type="xsd:double"/>
+            <xsd:element name="Width" type="xsd:double"/>
+            <xsd:element name="Height" type="xsd:double"/>
+            <xsd:element name="LineColor" type="xsd:string"/>
+            <xsd:element name="FillColor" type="xsd:string"/>
+            <xsd:element name="Note" type="xsd:IDREF" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+
+    <xsd:complexType name="AreaDisplays">
+        <xsd:sequence>
+            <xsd:element name="AreaDisplay" type="AreaDisplayInfo" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="AreaDisplayInfo">
+        <xsd:sequence>
+            <xsd:element name="X" type="xsd:double"/>
+            <xsd:element name="Y" type="xsd:double"/>
+            <xsd:element name="Width" type="xsd:double"/>
+            <xsd:element name="Height" type="xsd:double"/>
+            <xsd:element name="LineColor" type="xsd:string"/>
+            <xsd:element name="FillColor" type="xsd:string"/>
+            <xsd:element name="DashArray" type="xsd:string"/>
+            <xsd:element name="NameX" type="xsd:double"/>
+            <xsd:element name="NameY" type="xsd:double"/>
+            <xsd:element name="NameColor" type="xsd:string"/>
+            <xsd:element name="ZIndex" type="xsd:integer"/>
+            <xsd:element name="Area" type="xsd:IDREF" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+</xsd:schema>
